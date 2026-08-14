@@ -1,0 +1,27 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# IDE
+.vscode/
+.idea/
+
+# Experiment outputs
+results/
+
+# Generated figures
+docs/figures/
+
+# Environment files
+.env
+
+# Credentials / secrets
+credentials/
+secrets/
+
+# OS files
+.DS_Store
+Thumbs.db
