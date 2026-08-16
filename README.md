@@ -36,6 +36,8 @@
 - [Preparing Test Images](#preparing-test-images)
 - [Running the Project](#running-the-project)
 - [Graphical User Interface](#graphical-user-interface)
+- [GUI Screenshots](#gui-screenshots)
+- [GUI Visual Theme](#gui-visual-theme)
 - [Command-Line Interface](#command-line-interface)
 - [Running the Experiments](#running-the-experiments)
 - [Understanding the Results](#understanding-the-results)
@@ -355,6 +357,13 @@ QuantumImageEncryption/
 │
 ├── results/
 ├── docs/
+│   ├── screenshots/
+│   │   ├── 01_encryption_demo.png
+│   │   ├── 02_security_analysis.png
+│   │   ├── 03_performance.png
+│   │   ├── 04_quantum_noise.png
+│   │   └── 05_architecture.png
+│   └── report/
 ├── tests/
 │
 └── src/
@@ -718,20 +727,315 @@ For reproducible experiments, keep the test images unchanged after collecting re
 
 # Running the Project
 
-## Graphical User Interface
+## GUI Screenshots
+
+The following screenshots should be added manually after running the application.
+
+> **Screenshot location:** `docs/screenshots/`
+
+Create this directory:
+
+```text
+docs/
+└── screenshots/
+```
+
+Then save the screenshots using these exact filenames.
+
+## 1. Encryption & Decryption
+
+**File:**
+
+```text
+docs/screenshots/01-encryption-decryption.png
+```
+
+**What to capture:**
+
+Show the main encryption/decryption tab with:
+
+- Original image
+- Grayscale image
+- Encrypted image
+- Decrypted image
+- Encryption key field
+- Encryption/decryption controls
+- Exact recovery verification
+- Maximum pixel difference
+- Total absolute difference
+
+**Markdown placeholder:**
+
+```markdown
+![Encryption and Decryption](docs/screenshots/01-encryption-decryption.png)
+```
+
+<!-- SCREENSHOT: Add 01-encryption-decryption.png here -->
+
+---
+
+## 2. Security Analysis
+
+**File:**
+
+```text
+docs/screenshots/02-security-analysis.png
+```
+
+**What to capture:**
+
+Show the Security Analysis tab containing the project's security metrics, such as:
+
+- Original entropy
+- Encrypted entropy
+- Horizontal correlation
+- Vertical correlation
+- Diagonal correlation
+- NPCR
+- UACI
+- Key-sensitivity results
+- Key-space information
+- Histogram/security visualization if visible
+
+**Markdown placeholder:**
+
+```markdown
+![Security Analysis](docs/screenshots/02-security-analysis.png)
+```
+
+<!-- SCREENSHOT: Add 02-security-analysis.png here -->
+
+---
+
+## 3. Performance Analysis
+
+**File:**
+
+```text
+docs/screenshots/03-performance.png
+```
+
+**What to capture:**
+
+Show the Performance tab with the measured:
+
+- Encryption time
+- Decryption time
+- Total execution time
+- Image-size scalability
+- Quantum keystream generation performance
+- Throughput/results where available
+
+**Markdown placeholder:**
+
+```markdown
+![Performance Analysis](docs/screenshots/03-performance.png)
+```
+
+<!-- SCREENSHOT: Add 03-performance.png here -->
+
+---
+
+## 4. Quantum / Noise Analysis
+
+**File:**
+
+```text
+docs/screenshots/04-quantum-noise-analysis.png
+```
+
+**What to capture:**
+
+Show the quantum/noise analysis interface containing relevant results such as:
+
+- Ideal quantum simulation
+- Depolarizing noise
+- Readout noise
+- Noise sweep
+- Total variation distance
+- Noise impact results
+
+**Markdown placeholder:**
+
+```markdown
+![Quantum and Noise Analysis](docs/screenshots/04-quantum-noise-analysis.png)
+```
+
+<!-- SCREENSHOT: Add 04-quantum-noise-analysis.png here -->
+
+---
+
+## 5. Project Architecture / About
+
+**File:**
+
+```text
+docs/screenshots/05-project-overview.png
+```
+
+**What to capture:**
+
+Show the project's architecture/about/documentation section, including the project description, encryption pipeline, or architecture diagram if available.
+
+**Markdown placeholder:**
+
+```markdown
+![Project Overview](docs/screenshots/05-project-overview.png)
+```
+
+<!-- SCREENSHOT: Add 05-project-overview.png here -->
+
+---
+
+## Screenshot Checklist
+
+Before the final GitHub release, replace every screenshot placeholder above with the actual image.
+
+```text
+[ ] 01-encryption-decryption.png
+[ ] 02-security-analysis.png
+[ ] 03-performance.png
+[ ] 04-quantum-noise-analysis.png
+[ ] 05-project-overview.png
+```
+
+The screenshots should be taken directly from the running application. Do not manually edit numerical results or fabricate values for presentation purposes.
+
+# Graphical User Interface
 
 The project includes a PySide6-based graphical user interface for demonstrating the complete encryption system.
 
-After activating the virtual environment, launch the GUI from the project root with:
+Launch it from the project root with:
 
 ```powershell
 python -m src.app.gui
 ```
 
-There are two main ways to interact with the system:
+The GUI is organized into five main tabs:
 
-1. Command-line application
-2. Individual experiment modules
+1. **Encryption Demo** — image selection, key entry, encryption/decryption, previews, and exact-recovery verification.
+2. **Security Analysis** — entropy, pixel correlation, NPCR, UACI, histogram uniformity, and key-analysis results.
+3. **Performance** — full encryption/decryption timing and quantum-keystream throughput measurements.
+4. **Quantum Noise** — simulated depolarizing-noise analysis, readout-noise analysis, and Total Variation Distance (TVD).
+5. **Architecture** — project overview, encryption architecture, quantum circuit description, and research limitations.
+
+The GUI is intended to make the experimental pipeline easier to demonstrate without replacing the underlying Python modules and experiment scripts.
+
+---
+
+# GUI Screenshots
+
+Screenshots are intentionally kept outside the source code and should be added under:
+
+```text
+docs/
+└── screenshots/
+    ├── 01_encryption_demo.png
+    ├── 02_security_analysis.png
+    ├── 03_performance.png
+    ├── 04_quantum_noise.png
+    └── 05_architecture.png
+```
+
+> **Screenshot placeholder:** Replace each placeholder below with the corresponding image after taking the final screenshots from the GUI.
+
+### 1. Encryption Demo
+
+**What to capture:** The complete first tab showing image selection, encryption key field, action buttons, original/grayscale/encrypted/decrypted previews, and exact recovery verification.
+
+![Encryption Demo](docs/screenshots/01_encryption_demo.png)
+
+---
+
+### 2. Security Analysis
+
+**What to capture:** The Security Analysis tab after running the analysis, including entropy, horizontal/vertical/diagonal correlation, NPCR, UACI, histogram uniformity, key analysis, and the interpretation panel.
+
+![Security Analysis](docs/screenshots/02_security_analysis.png)
+
+---
+
+### 3. Performance
+
+**What to capture:** The Performance tab with full encryption/decryption timing and the quantum-keystream performance table populated.
+
+![Performance](docs/screenshots/03_performance.png)
+
+---
+
+### 4. Quantum Noise
+
+**What to capture:** The Quantum Noise tab after running the noise analysis, including the noise sweep table and interpretation/results section.
+
+![Quantum Noise](docs/screenshots/04_quantum_noise.png)
+
+---
+
+### 5. Architecture
+
+**What to capture:** The Architecture tab showing the project overview, encryption architecture, quantum circuit component, and research limitations.
+
+![Architecture](docs/screenshots/05_architecture.png)
+
+---
+
+## GUI Visual Theme
+
+The final GUI uses a deliberate dark technical palette rather than a plain black/gray interface.
+
+| UI Role | Palette | Purpose |
+|---|---|---|
+| Main background | Deep navy | Reduces visual harshness and creates depth |
+| Primary accent | Cyan | Used for active tabs, section emphasis, and primary interaction |
+| Secondary accent | Violet | Used for quantum/key-analysis visual emphasis |
+| Success | Green | Indicates completed operations and exact recovery |
+| In progress | Amber | Indicates active encryption, analysis, or testing |
+| Error | Red | Indicates failed operations or validation errors |
+| Panels | Blue-gray | Separates cards and sections without excessive contrast |
+
+The goal is not to color every component. The palette uses **semantic color** so that color communicates meaning:
+
+```text
+CYAN   → primary / active
+VIOLET → quantum / analytical
+GREEN  → success / verified
+AMBER  → running / attention
+RED    → error / failure
+```
+
+This keeps the interface visually distinctive while maintaining a professional research-tool appearance.
+
+---
+
+# Recommended Demonstration Flow
+
+For a clean academic/project demonstration, use the GUI in this order:
+
+```text
+1. Launch GUI
+      ↓
+2. Select test.png
+      ↓
+3. Enter encryption key
+      ↓
+4. Encrypt image
+      ↓
+5. Decrypt image
+      ↓
+6. Verify exact recovery
+      ↓
+7. Run Security Analysis
+      ↓
+8. Run Performance tests
+      ↓
+9. Run Quantum Noise analysis
+      ↓
+10. Open Architecture tab
+```
+
+For the strongest demonstration, take the five GUI screenshots after the corresponding tab has been populated with real results.
+
+Do not fabricate or manually edit metric values in screenshots. Screenshots should represent actual program output from the current repository.
 
 ---
 
@@ -953,6 +1257,8 @@ Completed finalization work includes:
 - secret/security review,
 - fresh virtual-environment installation testing,
 - README verification,
+- GUI visual-theme and presentation review,
+- GUI screenshot documentation,
 - final Git review,
 - final commit,
 - GitHub publication/release.
@@ -1093,7 +1399,7 @@ Noise experiments currently study:
 
 # Results and Generated Files
 
-The `results/` directory stores generated outputs from experiments and the GUI.
+The `results/` directory stores generated outputs from experiments and the GUI. GUI screenshots intended for repository documentation belong under `docs/screenshots/`.
 
 Typical GUI outputs include:
 
@@ -1177,6 +1483,8 @@ Before demonstrating or publishing the project:
 [ ] GUI launches with python -m src.app.gui
 [ ] GUI encryption/decryption works
 [ ] Exact recovery reports zero pixel difference
+[ ] Final screenshots captured for all five GUI tabs
+[ ] Screenshot paths in README match docs/screenshots/
 [ ] .venv/ and __pycache__/ are ignored by Git
 [ ] No real credentials or secrets are present
 ```
@@ -1307,6 +1615,23 @@ Then:
 
 ---
 
+# Screenshot Documentation
+
+Before publishing the repository, capture the GUI at a stable final state.
+
+Recommended screenshot rules:
+
+- Use the same application window size for all five screenshots.
+- Use the same test image and encryption key when comparing tabs.
+- Run the relevant analysis before capturing result-heavy tabs.
+- Do not include personal files, usernames, passwords, API keys, or unrelated desktop content.
+- Keep screenshots at a readable resolution.
+- Use descriptive filenames matching the paths documented above.
+
+If a screenshot is not yet available, leave the placeholder in this README rather than inserting a broken image link.
+
+---
+
 # Limitations
 
 The current project has several limitations.
@@ -1394,7 +1719,7 @@ Project:
 
 If this project is referenced academically, describe it as:
 
-> Yogesh Agrawal. *Quantum-Inspired Image Encryption Using Quantum Circuits*. Academic Research Prototype, 2026.
+> Ether, Yogesh Agrawal. *Quantum-Inspired Image Encryption Using Quantum Circuits*. Academic Research Prototype, 2026.
 
 ---
 

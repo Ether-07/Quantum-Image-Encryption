@@ -79,6 +79,45 @@ GUI_ENCRYPTED = RESULTS_DIR / "gui_encrypted.png"
 GUI_DECRYPTED = RESULTS_DIR / "gui_decrypted.png"
 
 
+
+# ============================================================
+# UI THEME
+# ============================================================
+
+COLORS = {
+    "bg": "#0B1020", "surface": "#111827", "surface_alt": "#172033",
+    "surface_hover": "#1D2940", "border": "#26344D", "text": "#E8EEF7",
+    "muted": "#8FA1B8", "cyan": "#22D3EE", "cyan_dark": "#0891B2",
+    "violet": "#8B5CF6", "violet_dark": "#6D28D9", "green": "#34D399",
+    "green_dark": "#059669", "amber": "#FBBF24", "red": "#FB7185",
+}
+
+APP_STYLE = f"""
+QWidget {{ background-color: {COLORS["bg"]}; color: {COLORS["text"]}; font-family: "Segoe UI"; font-size: 11px; }}
+QMainWindow {{ background-color: {COLORS["bg"]}; }}
+QGroupBox {{ background-color: {COLORS["surface"]}; border: 1px solid {COLORS["border"]}; border-radius: 12px; margin-top: 14px; padding: 18px 12px 12px 12px; font-weight: 700; color: {COLORS["cyan"]}; }}
+QGroupBox::title {{ subcontrol-origin: margin; left: 14px; padding: 0 7px; color: {COLORS["cyan"]}; background-color: {COLORS["surface"]}; }}
+QTabWidget::pane {{ border: 1px solid {COLORS["border"]}; border-radius: 10px; background-color: {COLORS["surface"]}; top: -1px; }}
+QTabBar::tab {{ background-color: {COLORS["surface_alt"]}; color: {COLORS["muted"]}; border: 1px solid {COLORS["border"]}; border-bottom: none; padding: 10px 18px; margin-right: 3px; border-top-left-radius: 8px; border-top-right-radius: 8px; }}
+QTabBar::tab:selected {{ background-color: {COLORS["surface"]}; color: {COLORS["cyan"]}; border-top: 2px solid {COLORS["cyan"]}; }}
+QTabBar::tab:hover {{ color: {COLORS["text"]}; background-color: {COLORS["surface_hover"]}; }}
+QPushButton {{ background-color: {COLORS["surface_alt"]}; color: {COLORS["text"]}; border: 1px solid {COLORS["border"]}; border-radius: 8px; padding: 9px 15px; font-weight: 700; }}
+QPushButton:hover {{ background-color: {COLORS["surface_hover"]}; border-color: {COLORS["cyan"]}; }}
+QPushButton:pressed {{ background-color: {COLORS["cyan_dark"]}; }}
+QPushButton:disabled {{ background-color: #101827; color: #526176; border-color: #1C2738; }}
+QLineEdit, QTextEdit, QTableWidget {{ background-color: #0D1524; color: {COLORS["text"]}; border: 1px solid {COLORS["border"]}; border-radius: 8px; selection-background-color: {COLORS["violet_dark"]}; selection-color: white; }}
+QLineEdit {{ padding: 8px 10px; }}
+QLineEdit:focus, QTextEdit:focus {{ border: 1px solid {COLORS["cyan"]}; }}
+QHeaderView::section {{ background-color: {COLORS["surface_alt"]}; color: {COLORS["cyan"]}; border: none; border-bottom: 1px solid {COLORS["border"]}; padding: 8px; font-weight: 700; }}
+QTableWidget {{ gridline-color: {COLORS["border"]}; alternate-background-color: #101A2B; }}
+QTableWidget::item {{ padding: 6px; }}
+QTableWidget::item:selected {{ background-color: {COLORS["violet_dark"]}; }}
+QScrollArea {{ border: none; background-color: {COLORS["bg"]}; }}
+QScrollBar:vertical {{ background: {COLORS["surface"]}; width: 10px; margin: 2px; }}
+QScrollBar::handle:vertical {{ background: {COLORS["border"]}; border-radius: 5px; min-height: 30px; }}
+QScrollBar::handle:vertical:hover {{ background: {COLORS["cyan_dark"]}; }}
+"""
+
 # ============================================================
 # IMAGE PREVIEW
 # ============================================================
@@ -106,10 +145,10 @@ class ImagePreview(QLabel):
         self.setStyleSheet(
             """
             QLabel {
-                border: 1px solid #3d3d3d;
-                border-radius: 10px;
-                background-color: #171717;
-                color: #777777;
+                border: 1px solid #26344D;
+                border-radius: 12px;
+                background-color: #0D1524;
+                color: #6F8098;
                 padding: 8px;
             }
             """
@@ -191,9 +230,10 @@ class MetricCard(QFrame):
         self.setStyleSheet(
             """
             QFrame {
-                background-color: #181818;
-                border: 1px solid #353535;
-                border-radius: 10px;
+                background-color: #111827;
+                border: 1px solid #26344D;
+                border-radius: 11px;
+                border-left: 3px solid #8B5CF6;
             }
             """
         )
@@ -207,9 +247,10 @@ class MetricCard(QFrame):
         title_label.setStyleSheet(
             """
             QLabel {
-                color: #999999;
-                font-size: 11px;
-                font-weight: bold;
+                color: #8FA1B8;
+                font-size: 10px;
+                font-weight: 800;
+                letter-spacing: 0.6px;
             }
             """
         )
@@ -221,9 +262,9 @@ class MetricCard(QFrame):
         self.value_label.setStyleSheet(
             """
             QLabel {
-                color: #eeeeee;
-                font-size: 20px;
-                font-weight: bold;
+                color: #E8EEF7;
+                font-size: 21px;
+                font-weight: 800;
             }
             """
         )
@@ -317,12 +358,32 @@ class QuantumImageEncryptionGUI(QMainWindow):
             900
         )
 
+        QApplication.instance().setStyleSheet(APP_STYLE)
+
         self.resize(
             1450,
             950
         )
 
         self.setup_ui()
+
+    # ========================================================
+    # STATUS / UI HELPERS
+    # ========================================================
+
+    def set_status(self, text, color=None):
+        upper = text.upper()
+        if color is None:
+            if "ERROR" in upper or "FAILED" in upper:
+                color = COLORS["red"]
+            elif "COMPLETE" in upper or "VERIFIED" in upper or "READY" in upper:
+                color = COLORS["green"]
+            elif any(word in upper for word in ("RUNNING", "ENCRYPTING", "DECRYPTING", "ANALYZING", "TESTING")):
+                color = COLORS["amber"]
+            else:
+                color = COLORS["cyan"]
+        self.status_label.setText(text)
+        self.status_label.setStyleSheet(f"QLabel {{ color: {color}; font-weight: 800; padding: 4px 10px; }}")
 
     # ========================================================
     # MAIN UI
@@ -371,6 +432,10 @@ class QuantumImageEncryptionGUI(QMainWindow):
             title_font
         )
 
+        title.setStyleSheet(
+            f"""QLabel {{ color: {COLORS["text"]}; padding: 6px; letter-spacing: 1px; }}"""
+        )
+
         subtitle = QLabel(
             "Image encryption using quantum-circuit-derived keystream generation"
         )
@@ -399,8 +464,8 @@ class QuantumImageEncryptionGUI(QMainWindow):
         self.status_label.setStyleSheet(
             """
             QLabel {
-                color: #55d66b;
-                font-weight: bold;
+                color: #34D399;
+                font-weight: 800;
             }
             """
         )
@@ -658,6 +723,10 @@ class QuantumImageEncryptionGUI(QMainWindow):
             button_row
         )
 
+        self.encrypt_button.setStyleSheet(f"""QPushButton {{ background-color: #075985; border: 1px solid {COLORS["cyan"]}; color: white; }} QPushButton:hover {{ background-color: #0E7490; }} QPushButton:pressed {{ background-color: #164E63; }} QPushButton:disabled {{ background-color: #101827; color: #526176; border-color: #1C2738; }}""")
+        self.decrypt_button.setStyleSheet(f"""QPushButton {{ background-color: #4C1D95; border: 1px solid {COLORS["violet"]}; color: white; }} QPushButton:hover {{ background-color: #5B21B6; }} QPushButton:pressed {{ background-color: #3B0764; }} QPushButton:disabled {{ background-color: #101827; color: #526176; border-color: #1C2738; }}""")
+        self.analyze_button.setStyleSheet(f"""QPushButton {{ background-color: #065F46; border: 1px solid {COLORS["green"]}; color: white; }} QPushButton:hover {{ background-color: #047857; }} QPushButton:pressed {{ background-color: #064E3B; }} QPushButton:disabled {{ background-color: #101827; color: #526176; border-color: #1C2738; }}""")
+
         controls_group.setLayout(
             controls
         )
@@ -716,13 +785,7 @@ class QuantumImageEncryptionGUI(QMainWindow):
             )
 
             title_label.setStyleSheet(
-                """
-                QLabel {
-                    font-weight: bold;
-                    font-size: 12px;
-                    color: #cccccc;
-                }
-                """
+                f"""QLabel {{ font-weight: 800; font-size: 11px; color: {COLORS["muted"]}; padding: 3px; }}"""
             )
 
             image_layout.addWidget(
@@ -814,8 +877,11 @@ class QuantumImageEncryptionGUI(QMainWindow):
         self.demo_operation_status.setStyleSheet(
             """
             QLabel {
-                color: #888888;
-                padding: 5px;
+                color: #8FA1B8;
+                background-color: #0D1524;
+                border: 1px solid #26344D;
+                border-radius: 8px;
+                padding: 9px;
             }
             """
         )
@@ -1782,9 +1848,7 @@ Conceptually:
                 "✓ Ready for encryption"
             )
 
-            self.status_label.setText(
-                "● IMAGE READY"
-            )
+            self.set_status("● IMAGE READY")
 
             self.tabs.setCurrentIndex(
                 0
@@ -1792,9 +1856,7 @@ Conceptually:
 
         except Exception as error:
 
-            self.status_label.setText(
-                "● ERROR"
-            )
+            self.set_status("● ERROR")
 
             QMessageBox.critical(
                 self,
@@ -1832,9 +1894,7 @@ Conceptually:
 
         try:
 
-            self.status_label.setText(
-                "● ENCRYPTING..."
-            )
+            self.set_status("● ENCRYPTING...")
 
             self.demo_operation_status.setText(
                 "⏳ Running encryption pipeline..."
@@ -1913,9 +1973,7 @@ Conceptually:
                 "→ Ready for decryption"
             )
 
-            self.status_label.setText(
-                "● ENCRYPTION COMPLETE"
-            )
+            self.set_status("● ENCRYPTION COMPLETE")
 
         except Exception as error:
 
@@ -1923,9 +1981,7 @@ Conceptually:
                 True
             )
 
-            self.status_label.setText(
-                "● ENCRYPTION ERROR"
-            )
+            self.set_status("● ENCRYPTION ERROR")
 
             QMessageBox.critical(
                 self,
@@ -1963,9 +2019,7 @@ Conceptually:
 
         try:
 
-            self.status_label.setText(
-                "● DECRYPTING..."
-            )
+            self.set_status("● DECRYPTING...")
 
             self.demo_operation_status.setText(
                 "⏳ Running decryption pipeline..."
@@ -2057,9 +2111,7 @@ Conceptually:
                     """
                 )
 
-                self.status_label.setText(
-                    "● RECOVERY VERIFIED"
-                )
+                self.set_status("● RECOVERY VERIFIED")
 
             else:
 
@@ -2077,9 +2129,7 @@ Conceptually:
                     """
                 )
 
-                self.status_label.setText(
-                    "● RECOVERY DIFFERENCE DETECTED"
-                )
+                self.set_status("● RECOVERY DIFFERENCE DETECTED")
 
             self.maximum_difference_label.setText(
                 f"Maximum pixel difference: "
@@ -2110,9 +2160,7 @@ Conceptually:
                 True
             )
 
-            self.status_label.setText(
-                "● DECRYPTION ERROR"
-            )
+            self.set_status("● DECRYPTION ERROR")
 
             QMessageBox.critical(
                 self,
@@ -2160,9 +2208,7 @@ Conceptually:
 
         try:
 
-            self.status_label.setText(
-                "● ANALYZING SECURITY..."
-            )
+            self.set_status("● ANALYZING SECURITY...")
 
             QApplication.processEvents()
 
@@ -2333,9 +2379,7 @@ Conceptually:
                 interpretation
             )
 
-            self.status_label.setText(
-                "● SECURITY ANALYSIS COMPLETE"
-            )
+            self.set_status("● SECURITY ANALYSIS COMPLETE")
 
             self.tabs.setCurrentIndex(
                 1
@@ -2343,9 +2387,7 @@ Conceptually:
 
         except Exception as error:
 
-            self.status_label.setText(
-                "● ANALYSIS ERROR"
-            )
+            self.set_status("● ANALYSIS ERROR")
 
             QMessageBox.critical(
                 self,
@@ -2383,9 +2425,7 @@ Conceptually:
 
         try:
 
-            self.status_label.setText(
-                "● RUNNING PERFORMANCE TEST..."
-            )
+            self.set_status("● RUNNING PERFORMANCE TEST...")
 
             QApplication.processEvents()
 
@@ -2447,15 +2487,11 @@ Conceptually:
                 f"{total_time:.4f} s"
             )
 
-            self.status_label.setText(
-                "● PERFORMANCE TEST COMPLETE"
-            )
+            self.set_status("● PERFORMANCE TEST COMPLETE")
 
         except Exception as error:
 
-            self.status_label.setText(
-                "● PERFORMANCE ERROR"
-            )
+            self.set_status("● PERFORMANCE ERROR")
 
             QMessageBox.critical(
                 self,
@@ -2485,9 +2521,7 @@ Conceptually:
 
         try:
 
-            self.status_label.setText(
-                "● TESTING QUANTUM KEYSTREAM..."
-            )
+            self.set_status("● TESTING QUANTUM KEYSTREAM...")
 
             QApplication.processEvents()
 
@@ -2557,15 +2591,11 @@ Conceptually:
                 results
             )
 
-            self.status_label.setText(
-                "● QUANTUM PERFORMANCE COMPLETE"
-            )
+            self.set_status("● QUANTUM PERFORMANCE COMPLETE")
 
         except Exception as error:
 
-            self.status_label.setText(
-                "● QUANTUM PERFORMANCE ERROR"
-            )
+            self.set_status("● QUANTUM PERFORMANCE ERROR")
 
             QMessageBox.critical(
                 self,
@@ -2589,9 +2619,7 @@ Conceptually:
                 create_readout_noise_model,
             )
 
-            self.status_label.setText(
-                "● RUNNING QUANTUM NOISE ANALYSIS..."
-            )
+            self.set_status("● RUNNING QUANTUM NOISE ANALYSIS...")
 
             QApplication.processEvents()
 
@@ -2829,15 +2857,11 @@ Conceptually:
                 text
             )
 
-            self.status_label.setText(
-                "● QUANTUM NOISE ANALYSIS COMPLETE"
-            )
+            self.set_status("● QUANTUM NOISE ANALYSIS COMPLETE")
 
         except Exception as error:
 
-            self.status_label.setText(
-                "● NOISE ANALYSIS ERROR"
-            )
+            self.set_status("● NOISE ANALYSIS ERROR")
 
             QMessageBox.critical(
                 self,
@@ -2972,9 +2996,7 @@ Conceptually:
             "Select an image to begin."
         )
 
-        self.status_label.setText(
-            "● READY"
-        )
+        self.set_status("● READY")
 
         self.tabs.setCurrentIndex(
             0
