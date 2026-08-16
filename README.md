@@ -35,12 +35,14 @@
 - [Verifying the Installation](#verifying-the-installation)
 - [Preparing Test Images](#preparing-test-images)
 - [Running the Project](#running-the-project)
+- [Graphical User Interface](#graphical-user-interface)
 - [Command-Line Interface](#command-line-interface)
 - [Running the Experiments](#running-the-experiments)
 - [Understanding the Results](#understanding-the-results)
 - [Security Metrics](#security-metrics)
 - [Quantum Noise Experiments](#quantum-noise-experiments)
 - [Results and Generated Files](#results-and-generated-files)
+- [Final Handoff Checklist](#final-handoff-checklist)
 - [Reproducibility](#reproducibility)
 - [Troubleshooting](#troubleshooting)
 - [Limitations](#limitations)
@@ -337,7 +339,7 @@ The current project can be completed entirely using simulation.
 
 # Project Structure
 
-The final project is intended to follow a structure similar to:
+The final repository is organized into these main components:
 
 ```text
 QuantumImageEncryption/
@@ -352,21 +354,16 @@ QuantumImageEncryption/
 │   └── test_512.png
 │
 ├── results/
-│   ├── encrypted/
-│   ├── security/
-│   ├── performance/
-│   └── noise/
-│
 ├── docs/
-│   ├── figures/
-│   └── report/
-│       ├── report.md
-│       ├── REPORT_BUILD_GUIDE.md
-│       └── RESULTS_TO_FILL.md
-│
 ├── tests/
 │
 └── src/
+    ├── __init__.py
+    ├── security_analysis.py
+    │
+    ├── app/
+    │   ├── __init__.py
+    │   └── gui.py
     │
     ├── analysis/
     │   ├── histogram.py
@@ -378,16 +375,15 @@ QuantumImageEncryption/
     │   ├── quantum_metrics.py
     │   └── visualization.py
     │
-    ├── app/
-    │   ├── __init__.py
-    │   └── main.py
-    │
     ├── encryption/
     │   ├── key_generator.py
     │   ├── quantum_keystream.py
+    │   ├── permutation.py
     │   ├── block_permutation.py
     │   ├── block_transform.py
     │   ├── diffusion.py
+    │   ├── encrypt.py
+    │   ├── decrypt.py
     │   └── pipeline.py
     │
     ├── experiments/
@@ -395,16 +391,19 @@ QuantumImageEncryption/
     │   ├── phase6_*.py
     │   ├── phase7_*.py
     │   ├── quantum_performance_test.py
+    │   ├── noise_model_test.py
+    │   ├── quantum_noise_test.py
+    │   ├── noise_sweep_test.py
+    │   ├── noise_impact_test.py
     │   └── run_all.py
     │
     ├── image/
-    │
     └── noise/
         ├── __init__.py
         └── noise_models.py
 ```
 
-Your exact filenames may differ slightly depending on the final state of the project.
+The repository excludes the local virtual environment and Python cache files through `.gitignore`.
 
 ---
 
@@ -675,12 +674,13 @@ Qiskit Aer    → importable
 NumPy         → importable
 Pillow        → importable
 Matplotlib    → importable
+PySide6       → importable
 ```
 
 You can perform a quick combined test:
 
 ```powershell
-python -c "import qiskit, qiskit_aer, numpy, PIL, matplotlib; print('Environment OK')"
+python -c "import qiskit, qiskit_aer, numpy, PIL, matplotlib, PySide6; print('Environment OK')"
 ```
 
 Expected:
@@ -717,6 +717,16 @@ For reproducible experiments, keep the test images unchanged after collecting re
 ---
 
 # Running the Project
+
+## Graphical User Interface
+
+The project includes a PySide6-based graphical user interface for demonstrating the complete encryption system.
+
+After activating the virtual environment, launch the GUI from the project root with:
+
+```powershell
+python -m src.app.gui
+```
 
 There are two main ways to interact with the system:
 
@@ -931,33 +941,28 @@ python -m src.experiments.noise_impact_test
 
 ---
 
-# Phase 8 — Finalization
+# Phase 8 — Finalization and Release
 
-Phase 8 turns the research prototype into a presentable academic project.
+Phase 8 prepares the completed project for handoff and publication.
 
-This includes:
+Completed finalization work includes:
 
-- final validation,
-- CLI interface,
-- visualization,
-- performance measurements,
-- noise analysis,
-- documentation,
-- report preparation.
+- repository cleanup,
+- removal of obsolete Phase-1 development files,
+- `.gitignore` verification,
+- secret/security review,
+- fresh virtual-environment installation testing,
+- README verification,
+- final Git review,
+- final commit,
+- GitHub publication/release.
 
-The final report workspace is:
+The main deliverable is the runnable source repository and GUI/experiment suite. A generated PDF report or presentation is not required for the project to operate.
 
-```text
-docs/report/
-```
-
-It contains:
+Supporting documentation remains under:
 
 ```text
-docs/report/
-├── report.md
-├── REPORT_BUILD_GUIDE.md
-└── RESULTS_TO_FILL.md
+docs/
 ```
 
 ---
@@ -1088,30 +1093,20 @@ Noise experiments currently study:
 
 # Results and Generated Files
 
-The `results/` directory is intended for generated artifacts.
+The `results/` directory stores generated outputs from experiments and the GUI.
 
-Recommended structure:
+Typical GUI outputs include:
 
 ```text
 results/
-├── encrypted/
-├── security/
-├── performance/
-└── noise/
+├── gui_grayscale_preview.png
+├── gui_encrypted.png
+└── gui_decrypted.png
 ```
 
-Examples:
+Experiment outputs can include encrypted/decrypted images, figures, performance results, and noise-analysis artifacts.
 
-```text
-results/final_encrypted.png
-results/final_decrypted.png
-results/phase5_encrypted.png
-results/phase5_decrypted.png
-```
-
-Do not blindly commit thousands of generated experiment files to Git.
-
-Keep only important reproducible outputs in version control.
+Do not blindly commit large collections of generated files to Git. Keep important reproducible artifacts when they are useful for demonstrating or documenting the project, and treat temporary runtime output as generated data.
 
 ---
 
@@ -1163,6 +1158,34 @@ Document:
 - simulator seed,
 - shot count,
 - noise levels.
+
+---
+
+# Final Handoff Checklist
+
+Before demonstrating or publishing the project:
+
+```text
+[ ] Fresh virtual environment can be created
+[ ] requirements.txt installs successfully
+[ ] Core dependencies import successfully
+[ ] phase5_recovery_test passes
+[ ] Wrong-key recovery test behaves as expected
+[ ] Security analysis executes
+[ ] Quantum performance test executes
+[ ] Quantum-noise tests execute
+[ ] GUI launches with python -m src.app.gui
+[ ] GUI encryption/decryption works
+[ ] Exact recovery reports zero pixel difference
+[ ] .venv/ and __pycache__/ are ignored by Git
+[ ] No real credentials or secrets are present
+```
+
+For a professor demonstration, the primary launch command is:
+
+```powershell
+python -m src.app.gui
+```
 
 ---
 
@@ -1371,7 +1394,7 @@ Project:
 
 If this project is referenced academically, describe it as:
 
-> Agrawal, Yogesh. *Quantum-Inspired Image Encryption Using Quantum Circuits*. Academic Research Prototype, 2026.
+> Yogesh Agrawal. *Quantum-Inspired Image Encryption Using Quantum Circuits*. Academic Research Prototype, 2026.
 
 ---
 
