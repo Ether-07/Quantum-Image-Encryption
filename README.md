@@ -30,8 +30,6 @@
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Environment Setup](#environment-setup)
-- [Dependency Installation](#dependency-installation)
 - [Verifying the Installation](#verifying-the-installation)
 - [Preparing Test Images](#preparing-test-images)
 - [Running the Project](#running-the-project)
@@ -41,7 +39,6 @@
 - [Command-Line Interface](#command-line-interface)
 - [Running the Experiments](#running-the-experiments)
 - [Understanding the Results](#understanding-the-results)
-- [Security Metrics](#security-metrics)
 - [Quantum Noise Experiments](#quantum-noise-experiments)
 - [Results and Generated Files](#results-and-generated-files)
 - [Final Handoff Checklist](#final-handoff-checklist)
@@ -749,28 +746,7 @@ Then save the screenshots using these exact filenames.
 ```text
 docs/screenshots/01-encryption-decryption.png
 ```
-
-**What to capture:**
-
-Show the main encryption/decryption tab with:
-
-- Original image
-- Grayscale image
-- Encrypted image
-- Decrypted image
-- Encryption key field
-- Encryption/decryption controls
-- Exact recovery verification
-- Maximum pixel difference
-- Total absolute difference
-
-**Markdown placeholder:**
-
-```markdown
-![Encryption and Decryption](docs/screenshots/01-encryption-decryption.png)
-```
-
-<!-- SCREENSHOT: Add 01-encryption-decryption.png here -->
+<img width="1920" height="1080" alt="01_encryption_demo" src="https://github.com/user-attachments/assets/b02e81da-a395-4e15-9388-8e01d67b0700" />
 
 ---
 
@@ -781,29 +757,7 @@ Show the main encryption/decryption tab with:
 ```text
 docs/screenshots/02-security-analysis.png
 ```
-
-**What to capture:**
-
-Show the Security Analysis tab containing the project's security metrics, such as:
-
-- Original entropy
-- Encrypted entropy
-- Horizontal correlation
-- Vertical correlation
-- Diagonal correlation
-- NPCR
-- UACI
-- Key-sensitivity results
-- Key-space information
-- Histogram/security visualization if visible
-
-**Markdown placeholder:**
-
-```markdown
-![Security Analysis](docs/screenshots/02-security-analysis.png)
-```
-
-<!-- SCREENSHOT: Add 02-security-analysis.png here -->
+<img width="1920" height="1080" alt="02_security_analysis" src="https://github.com/user-attachments/assets/c122738c-af0a-49a3-b182-fe67ecbf8cf9" />
 
 ---
 
@@ -814,25 +768,7 @@ Show the Security Analysis tab containing the project's security metrics, such a
 ```text
 docs/screenshots/03-performance.png
 ```
-
-**What to capture:**
-
-Show the Performance tab with the measured:
-
-- Encryption time
-- Decryption time
-- Total execution time
-- Image-size scalability
-- Quantum keystream generation performance
-- Throughput/results where available
-
-**Markdown placeholder:**
-
-```markdown
-![Performance Analysis](docs/screenshots/03-performance.png)
-```
-
-<!-- SCREENSHOT: Add 03-performance.png here -->
+<img width="1920" height="1080" alt="03_performance" src="https://github.com/user-attachments/assets/02523389-425f-47a7-b773-89425fd2537f" />
 
 ---
 
@@ -843,25 +779,7 @@ Show the Performance tab with the measured:
 ```text
 docs/screenshots/04-quantum-noise-analysis.png
 ```
-
-**What to capture:**
-
-Show the quantum/noise analysis interface containing relevant results such as:
-
-- Ideal quantum simulation
-- Depolarizing noise
-- Readout noise
-- Noise sweep
-- Total variation distance
-- Noise impact results
-
-**Markdown placeholder:**
-
-```markdown
-![Quantum and Noise Analysis](docs/screenshots/04-quantum-noise-analysis.png)
-```
-
-<!-- SCREENSHOT: Add 04-quantum-noise-analysis.png here -->
+<img width="1920" height="1080" alt="04_quantum_noise" src="https://github.com/user-attachments/assets/0a3a226c-1447-48bb-812a-a5e24d38dc15" />
 
 ---
 
@@ -872,18 +790,8 @@ Show the quantum/noise analysis interface containing relevant results such as:
 ```text
 docs/screenshots/05-project-overview.png
 ```
+<img width="1920" height="1080" alt="05_architecture" src="https://github.com/user-attachments/assets/30af7d76-7bc6-4db7-8ed5-c1c5c272427c" />
 
-**What to capture:**
-
-Show the project's architecture/about/documentation section, including the project description, encryption pipeline, or architecture diagram if available.
-
-**Markdown placeholder:**
-
-```markdown
-![Project Overview](docs/screenshots/05-project-overview.png)
-```
-
-<!-- SCREENSHOT: Add 05-project-overview.png here -->
 
 ---
 
